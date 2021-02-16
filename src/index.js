@@ -1,53 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  const parts = course.parts
+const App = (props) => {
+  const [selected, setSelected] = useState(0)
 
   return (
     <div>
-      <Header course={course} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <h1>Anecdote of the day</h1>
+      {props.anecdotes[selected]}
+      <Button text= 'next anecdote' handleClick = {randomAnecdote} />
     </div>
   )
 }
 
-const Header =({course}) => {
-  return (
-    <h1>{course.name}</h1>
-  )
-}
+const Button = ({text, handleClick}) => (
+  <button onClick = {text}>{handleClick}</button>
+)
 
-const Content =({parts}) => 
+const anecdotes = [
+  'If it hurts, do it more often',
+  'Adding manpower to a late software project makes it later!',
+  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+  'Premature optimization is the root of all evil.',
+  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+]
 
-<div>
-<div>{parts[0].name}</div>
-<div>{parts[1].name}</div>
-<div>{parts[2].name}</div>
-</div>
-
-const Total =({parts}) => {
-  return(
-  <p>Total number of exercises:  {parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+  <App anecdotes={anecdotes} />,
+  document.getElementById('root')
+)
